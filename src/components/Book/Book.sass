@@ -1,0 +1,62 @@
+@import '../variables'
+
+#Book
+    width: 100%
+    height: 100%
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    background-color: $background-color
+    a 
+        width: 400px
+        text-decoration: none
+        color: rgb(130, 130, 130)
+        padding: 8px
+        line-height: 1.4
+        font-family: $font-family
+        font-size: 12px
+        margin-bottom: 40px
+        &:hover
+            color: $text-color
+    h1 
+        color: $text-color
+        padding: 8px
+        line-height: 1.4
+        font-family: $font-family
+        font-size: 21px
+        margin-bottom: 20px
+    .book-data
+        width: 400px
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        border: 1px solid $border-color
+        border-radius: 3px
+        background-color: #fff
+        .row
+            box-sizing: border-box
+            width: 100%
+            display: flex
+            align-items: center
+            border-bottom: 1px solid $border-color
+            color: $text-color
+            padding: 8px
+            line-height: 1.4
+            font-family: $font-family
+            font-size: $font-size
+            .description
+                width: 50%
+                padding: 14px 16px
+                text-align: right
+            .value
+                width: 50%
+                padding: 14px 16px
+    .errors
+        color: rgb(175, 0, 0)
+        padding: 8px
+        line-height: 1.4
+        font-family: $font-family
+        font-size: $font-size
+        margin-top: 20px
