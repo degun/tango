@@ -15,10 +15,11 @@ function Characters(){
     const { characters, lastPage, err, loading } = useSelector(state => state.characters); //get the variables from the redux store
 
     useEffect(() => {
+        if(page > lastPage){
+            setPage(lastPage)
+        }
         dispatch(getCharacters(page, perPage, gender, name))
-    }, [page, perPage, gender, name]) //whenever one of these parameter changes, a getCharacters action is dispatched
-
-    if(loading){return <Spinner />}
+    }, [page, perPage, gender, name, lastPage]) //whenever one of these parameter changes, a getCharacters action is dispatched
 
     return (
         <div id="Characters">
@@ -33,7 +34,7 @@ function Characters(){
             </header>
             <main>
                 <div className="table-wrapper">
-                    <table>
+                    {loading ? <Spinner /> : <table>
                         <thead>
                             <tr>
                                 <th>Name and aliases</th>
@@ -48,11 +49,11 @@ function Characters(){
                                 <td>{nameAndAliases}</td>
                                 <td>{gender}</td>
                                 <td>{culture}</td>
-                                <td>{listOfBooks.map((id, i) => <Link title="Go to book" to={`/books/${id}`}>{id}{i !== (listOfBooks.length - 1) ? "," : ""}</Link>)}</td>
+                                <td>{listOfBooks.map((id, i) => <Link key={`${id}-${i}-${nameAndAliases}`} title="Go to book" to={`/books/${id}`}>{id}{i !== (listOfBooks.length - 1) ? "," : ""}</Link>)}</td>
                                 <td>{nrOfSeries}</td>
                             </tr>)}
                         </tbody>
-                    </table>
+                    </table>}
                 </div>
                 <div className="pagination">
                     <div className="buttons">
