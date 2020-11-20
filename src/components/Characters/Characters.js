@@ -14,12 +14,19 @@ function Characters(){
 
     const { characters, lastPage, err, loading } = useSelector(state => state.characters); //get the variables from the redux store
 
+    const debouncedName = useDebounce(name, 500);
+
     useEffect(() => {
         if(page > lastPage){
-            setPage(lastPage)
+            setPage(lastPage) //whenever the current page surpasses the lastPage (eg. when we change sizes), we should update the page to become the lastPage
         }
-        dispatch(getCharacters(page, perPage, gender, name))
-    }, [page, perPage, gender, name, lastPage]) //whenever one of these parameter changes, a getCharacters action is dispatched
+        dispatch(getCharacters(page, perPage, gender, debouncedName))
+    }, [page, perPage, gender, debouncedName, lastPage, dispatch]) //whenever one of these parameter changes, a getCharacters action is dispatched
+
+    useEffect(() => {
+        setPage(1)
+    }, [name, gender]) //reset the page if the filters change
+
 
     return (
         <div id="Characters">
@@ -79,5 +86,27 @@ function Characters(){
         </div>
     )
 }
+
+function useDebounce(value, delay) {
+    
+    const [debouncedValue, setDebouncedValue] = useState(value);
+  
+    useEffect(
+      () => {
+        const id = setTimeout(() => {
+          setDebouncedValue(value);
+        }, delay);
+
+        return () => {
+          clearTimeout(id);
+        };
+      },
+     
+      [value, delay] 
+    );
+  
+    return debouncedValue;
+  }
+  
 
 export default Characters;

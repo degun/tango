@@ -14,7 +14,7 @@ function Book({match}){
 
     useEffect(() => {
         dispatch(getBook(id))
-    }, [id]) //we dispatch a getBook action on each id change, meaning on each route change
+    }, [id, dispatch]) //we dispatch a getBook action on each id change, meaning on each route change
 
     if(loading){return <Spinner />}
 
@@ -22,7 +22,7 @@ function Book({match}){
         <div id="Book">
             <Link to="/characters">&lt; Back to characters</Link>
             <h1>Book details</h1>
-            <div className="book-data">
+            {Object.keys(book).length ? <div className="book-data">
                 <div className="row">
                     <div className="description">Name:</div>
                     <div className="value">{name}</div>
@@ -39,7 +39,9 @@ function Book({match}){
                     <div className="description">Release date:</div>
                     <div className="value">{releaseDate}</div>
                 </div>
-            </div>
+            </div> : <div className="book-data">
+                <div className="row">No book data to be shown</div>
+            </div>}
             {err ? <div className="errors">{err}</div> : null}
         </div>
     )
